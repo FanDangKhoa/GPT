@@ -1,3 +1,54 @@
-# GPT
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <nav>
+        
+        <ul class="center">
+            <a  href="#" class="newchat"><p>    
+                <ion-icon name="add-outline" class="cach"></ion-icon>
+                New Chat</p></a>
+            <p class="today">Today</p>
+            <li><a href="#">
+                <ion-icon name="chatbox-outline"></ion-icon>
+                Git hub là gì</a></li>
+            <li><a href="#">
+                <ion-icon name="chatbox-outline"></ion-icon>
+                Tạo trang web bằng HTML</a></li>
+            <li><a href="#">
+                <ion-icon name="chatbox-outline"></ion-icon>
+                Cách để học giỏi hơn
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="chatbox-outline"></ion-icon>
+                Lộ trình học CNTT
+            </a></li>
+            <li><a href="#">
+                <ion-icon name="chatbox-outline"></ion-icon>
+                Javascript
+            </a></li>
+        </ul>
+        <div class="menu"><ion-icon name="grid-outline"></ion-icon></div>
+    </nav>
+    <div class="content">
+        
+    </div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    const nav = document.querySelector('nav');
+    const menu = document.querySelector('.menu');
+    const content = document.querySelector('.content');
 
+    menu.onclick = function() {
+        nav.classList.toggle('hide');
+        content.classList.toggle('expand');
+    }
+</script>
+</html>
