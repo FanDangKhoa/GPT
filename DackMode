@@ -1,1 +1,32 @@
-# GPT
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+
+  background-color: white;
+  
+}
+
+.dark-mode {
+  background-color: black;
+  
+}
+</style>
+</head>
+<body>
+
+
+
+<button onclick="myFunction()">change</button>
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+</script>
+
+</body>
+</html>
