@@ -211,6 +211,307 @@ form input[type= 'submit']{
     margin-top: 75px;
     padding: 0;
 }
+footer {
+  text-align: center;
+  font-size: 20px;
+  min-height: 100hv;
+  margin-bottom: 0;
+  z-index: 99;
+}
+
+
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 0;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  z-index: 2;
+}
+
+.user-message img {
+  position: relative;
+  right: 49px;
+  top: 18px;
+}
+
+#chat-box {
+  width: 700px;
+  position: relative;
+  width: 1330px;
+  top: 50%;
+  /* Vertically center the chat box */
+  left: 50%;
+  /* Horizontally center the chat box */
+  transform: translate(-50%, -50%);
+  /* Centering using translate */
+
+}
+
+#chat-input {
+  border-radius: 20px;
+  width: 1000px;
+  height: 65px;
+  font-size: 16px;
+  padding-left: 20px;
+  /* Thêm padding bên trái */
+  padding-right: 20px;
+  /* Thêm padding bên phải */
+}
+
+#submit-button {
+  border-radius: 10px;
+  position: absolute;
+  right: 170px;
+  top: 10px;
+  bottom: 3px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 50px;
+  width: 60px;
+}
+
+#submit-button:hover {
+  background-color: green;
+}
+
+img {
+  right: 10px;
+  bottom: 10px;
+  color: white;
+  cursor: pointer;
+  height: 20px;
+  width: 25px;
+}
+
+#chat-container {
+  display: none;
+}
+
+#chat-container {
+  position: absolute;
+  top: 120px;
+  /* Khoảng cách từ trên xuống dưới header */
+  bottom: 6000px;
+  /* Khoảng cách từ trên lên trên footer */
+  width: 100%;
+  overflow-y: auto;
+  /* Cho phép cuộn khi nội dung vượt quá chiều cao */
+  max-height: calc(100vh - 200px);
+  /* Giới hạn chiều cao tối đa của phần chat-container */
+  z-index: 1;
+  /* Đảm bảo phần chat không hiển thị qua phần footer */
+}
+
+.chat-container {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 290px;
+}
+
+.message {
+  background-color: #0d0d0d;
+  color: #fff;
+  padding: 15px;
+  max-width: 100%;
+
+}
+
+.user-message {
+  background-color: #1f1f1f;
+  color: #fff;
+  ;
+  clear: both;
+  max-width: 100%;
+  align-self: flex-start;
+  height: 150px;
+  font-size: 20px;
+  padding-left: 450px;
+  /* Thêm padding bên trái */
+  padding-right: 450px;
+  /* Thêm padding bên phải */
+  padding-block: 2px;
+
+
+}
+
+.bot-message {
+  background-color: #272832;
+  color: #fff;
+  max-width: 100%;
+  clear: both;
+  align-self: flex-start;
+  height: 150px;
+  font-size: 20px;
+  padding-left: 500px;
+  /* Thêm padding bên trái */
+  padding-right: 500px;
+  /* Thêm padding bên phải */
+}
+
+
+
+.dot-animation {
+  display: flex;
+  justify-content: flex-start;
+  /* Push the dots to the right */
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  margin-right: 1000px;
+
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: left;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+      transform: scale(1);
+  }
+
+  50% {
+      transform: scale(1.2);
+  }
+}
+function updateRealDate() {
+    const now = new Date();
+    const options = { month: 'long', day: 'numeric' };
+    const dateText = now.toLocaleDateString('en-US', options);
+    document.getElementById("real-date").textContent = dateText;
+}
+
+// Cập nhật thời gian mỗi giây
+setInterval(updateRealDate, 1000);
+
+// Gọi hàm để cập nhật thời gian ban đầu
+updateRealDate();
+
+function checkInput() {
+    const input = document.getElementById("chat-input");
+    const submitButton = document.getElementById("submit-button");
+
+    if (input.value.trim() !== "") {
+        submitButton.style.backgroundColor = "green";
+        submitButton.disabled = false;
+    } else {
+        submitButton.style.backgroundColor = "white";
+        submitButton.disabled = true;
+    }
+}
+
+////////
+
+document.addEventListener("DOMContentLoaded", function () {
+    const chatContainer = document.querySelector(".chat-container");
+    const header = document.getElementById("header");
+    const chatHeader = document.getElementById("chat-header");
+    const chat = document.getElementById("chat");
+    const submitButton = document.getElementById("submit-button");
+
+    submitButton.disabled = true;
+
+    let isActionInProgress = false;
+
+    function addMessage(sender, message, messageType) {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", messageType);
+        // Thay thế văn bản bằng hình ảnh
+        const image = document.createElement("img");
+        if (sender === "Bạn") {
+            image.src = "img/user.png ";
+            image.alt = "Bạn";
+            image.style.width = "50px"; // Thay đổi chiều rộng
+            image.style.height = "50px"; // Thay đổi chiều cao
+
+        } else if (sender === "Chat GPT") {
+            image.src = "img/chatgpt.png";
+            image.alt = "Chat GPT";
+            image.style.width = "50px"; // Thay đổi chiều rộng
+            image.style.height = "50px"; // Thay đổi chiều cao
+
+        }
+
+        const text = document.createElement("span");
+        text.textContent = message;
+
+        messageDiv.appendChild(image);
+        messageDiv.appendChild(text);
+
+        chat.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+
+
+    function getAnswerFromChatGPT(question) {
+        isActionInProgress = true;
+
+        // Simulate a loading animation for the bot message
+        const loadingMessage = document.createElement("div");
+        loadingMessage.classList.add("message", "bot-message");
+
+        // Thay đổi hình ảnh nền cho phần trả lời
+        loadingMessage.style.backgroundImage = "url('img/chatgpt.png')"; // Đường dẫn đến hình ảnh "Chat GPT"
+        loadingMessage.style.backgroundSize = "50px 50px"; // Thay đổi kích thước hình ảnh
+        loadingMessage.style.backgroundRepeat = "no-repeat"; // Không lặp lại hình ảnh  vb
+        loadingMessage.style.backgroundPositionX = "400px"
+
+        // Thêm hiệu ứng dấu chấm nhấp nháy
+        const dotAnimation = document.createElement("div");
+        dotAnimation.classList.add("dot-animation");
+        for (let i = 1; i <= 3; i++) {
+            const dot = document.createElement("div");
+            dot.classList.add("dot");
+            dot.style.animationDelay = `${i * 0.2}s`; // Độ trễ của hiệu ứng cho từng dấu chấm
+            dot.style.backgroundImage = `url('img/dot.png')`; // Đường dẫn đến hình ảnh dấu chấm
+            dot.style.backgroundSize = "20px 20px"; // Thay đổi kích thước hình ảnh
+
+            dotAnimation.appendChild(dot);
+        }
+        loadingMessage.appendChild(dotAnimation);
+
+        chat.appendChild(loadingMessage);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        // Trong hàm getAnswerFromChatGPT
+
+
+        // Simulate a delayed response from ChatGPT
+        setTimeout(() => {
+            // Thay đổi phần trả lời theo ý muốn của bạn
+            const answer = "Đây là câu trả lời từ Chat GPT.";
+            loadingMessage.innerHTML = answer; // Thêm nội dung phản hồi
+
+            isActionInProgress = false;
+        }, 2000);
+    }
+
+
+    document.getElementById("submit-button").addEventListener("click", function () {
+        if (!isActionInProgress) {
+            const questionInput = document.getElementById("chat-input");
+            const question = questionInput.value;
+            addMessage("Bạn", question, "user-message");
+            getAnswerFromChatGPT(question);
+            questionInput.value = "";
+            header.style.display = "block";
+            document.getElementById("my-box").style.display = "none";
+            document.querySelector("h1").style.display = "none";
+        }
+    });
+
+});
+
 /* ---------------------------------------------- */
 /* ---------------- script login --------------------*/
 const title = document.querySelector('.title h1')
