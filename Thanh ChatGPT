@@ -1,87 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="utf-8">
-  <title>ChatGPT</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</head>
-
-<body>
-  <nav class="sidebar">
-    <ul class="center">
-      <a href="#" class="newchat">
-        <p>
-          <ion-icon name="add-outline" class="cach"></ion-icon>
-          New Chat
-        </p>
-      </a>
-      <p class="today">Today</p>
-      <li><a href="#">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          Git hub là gì</a></li>
-      <li><a href="#">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          Tạo trang web bằng HTML</a></li>
-      <li><a href="#">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          Cách để học giỏi hơn
-        </a></li>
-      <li><a href="#">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          Lộ trình học CNTT
-        </a></li>
-      <li><a href="#">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          Javascript
-        </a></li>
-      <li><a href="Libraries/login.html">
-          <ion-icon name="chatbox-outline"></ion-icon>
-          Login
-        </a></li>
-    </ul>
-    <div class="menu"><ion-icon name="grid-outline"></ion-icon></div>
-  </nav>
-  </nav>
-  <div class="content">
-    <div class="header">ChatGPT</div>
-  </div>
-  <div class="chat-container">
-    <div class="chat" id="chat">
-      <!-- Câu hỏi và câu trả lời của cuộc trò chuyện sẽ hiển thị ở đây -->
-    </div>
-    <footer class="fixed-footer">
-      <div id="chat-box">
-        <div id="user-input">
-          <input type="text" id="chat-input" placeholder="Send a message..." oninput="checkInput()">
-          <button id="submit-button" disabled onclick="sendMessage()">
-            <img src="img/arrow-389125_1280.png" alt="">
-          </button>
+  <head>
+    <meta charset="utf-8">
+    <title>ChatGPT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    
+    <div class="chat-container"></div>      
+    
+   
+    <div class="typing-container">
+      <div class="typing-content">
+        <div class="typing-textarea">
+          <textarea id="chat-input" spellcheck="false" placeholder="Enter a prompt here" required></textarea>
+          <span id="send-btn" class="material-symbols-rounded">send</span>
         </div>
-      </div>
-      Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts.
-      <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">Chat GPT
-        <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" id="real-date">
-          <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes">
-            <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes"> Version </a></a></a>
-    </footer>
-  </div>
+    </div>
+    </script>
+    <script src="Script/script.js"></script>
 
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <script>
-    const nav = document.querySelector('nav');
-    const menu = document.querySelector('.menu');
-    const content = document.querySelector('.content');
+const getChatResponse = async (incomingChatDiv) => {
+    const API_URL = "https://api.openai.com/v1/completions";
+    const pElement = document.createElement("p");
 
-    menu.onclick = function () {
-      nav.classList.toggle('hide');
-      content.classList.toggle('expand');
+    // Define the properties and data for the API request
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify({
+            model: "text-davinci-003",
+            prompt: userText,
+            max_tokens: 2048,
+            temperature: 0.2,
+            n: 1,
+            stop: null
+        })
     }
-  </script>
-  <script src="Script/script.js"></script>
+
+    // Send POST request to API, get response and set the reponse as paragraph element text
+    try {
+        const response = await (await fetch(API_URL, requestOptions)).json();
+        pElement.textContent = response.choices[0].text.trim();
+    } catch (error) { // Add error class to the paragraph element and set error text
+        pElement.classList.add("error");
+        pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
+    }
+
+    // Remove the typing animation, append the paragraph element and save the chats to local storage
+    incomingChatDiv.querySelector(".typing-animation").remove();
+    incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+    localStorage.setItem("all-chats", chatContainer.innerHTML);
+    chatContainer.scrollTo(0, chatContainer.scrollHeight);
+}
+
+    
+    
