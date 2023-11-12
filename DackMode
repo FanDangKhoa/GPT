@@ -6,12 +6,12 @@
 body {
 
   background-color: white;
-  
+  color: black;
 }
 
 .dark-mode {
   background-color: black;
-  
+  color:white;
 }
 themeButton.addEventListener("click", () => {
     document.body.classList.toggle("light-mode");
