@@ -13,20 +13,8 @@ body {
   background-color: black;
   
 }
-</style>
-</head>
-<body>
-
-
-
-<button onclick="myFunction()">change</button>
-
-<script>
-function myFunction() {
-   var element = document.body;
-   element.classList.toggle("dark-mode");
-}
-</script>
-
-</body>
-</html>
+themeButton.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    localStorage.setItem("themeColor", themeButton.innerText);
+    themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
+});
